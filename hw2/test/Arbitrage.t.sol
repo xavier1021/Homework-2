@@ -79,9 +79,24 @@ contract Arbitrage is Test {
         /**
          * Please add your solution below
          */
+        tokenA.approve(address(router), 99999 ether);
+        tokenB.approve(address(router), 99999 ether);
+        tokenC.approve(address(router), 99999 ether);
+        tokenD.approve(address(router), 99999 ether);
+        tokenE.approve(address(router), 99999 ether);
+
+        address[] memory route = new address[](5);
+        route[0] = address(tokenB);
+        route[1] = address(tokenA);
+        route[2] = address(tokenD);
+        route[3] = address(tokenC);
+        route[4] = address(tokenB);
+
+        router.swapExactTokensForTokens(tokenB.balanceOf(arbitrager), 0, route, address(arbitrager), block.timestamp);
         /**
          * Please add your solution above
          */
+
         uint256 tokensAfter = tokenB.balanceOf(arbitrager);
         assertGt(tokensAfter, 20 ether);
         console.log("After Arbitrage tokenB Balance: %s", tokensAfter);
